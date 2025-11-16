@@ -1,0 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.message-banner {
+    margin: 20px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.message-banner h1 {
+    font-size: 40px;    
+}
+
+.message-banner p {
+    font-size: 40px;
+}
+
+.choice-area {
+    margin: 50px 0;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.computer-choice, .human-choice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.choice-area h2 {
+    font-size: 35px;
+}
+
+.choice-area .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.choice-area button {
+    font-size: 30px;
+    border-width: 1px;
+    
+    padding: 5px 15px;
+    min-width: 5em;
+}

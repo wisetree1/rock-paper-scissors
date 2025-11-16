@@ -1,11 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <script src="./script.js"></script>
+    <script src="./script.js" defer></script>
+    <link rel="stylesheet" href="./styles.css">
     <meta charset="UTF-8">
     <title>Rock-Paper-Scissors</title>
 </head>
 <body>
-    
+    <div class="message-banner">
+        <h1 class="announcement">Welcome to Rock-Paper-Scissors! Select a shape to start! First to five wins.</h1>
+        <p class="score">0 - 0</p>
+    </div>
+    <div class="choice-area">
+        <div class="human-choice">
+            <h2>Human</h2>
+            <div class="buttons">
+                <button class="rock">Rock</button>
+                <button class="paper">Paper</button>
+                <button class="scissors">Scissors</button>
+            </div>
+        </div>
+        <div class="computer-choice">
+            <h2>Computer</h2>
+            <div class="buttons">
+                <button class="rock">Rock</button>
+                <button class="paper">Paper</button>
+                <button class="scissors">Scissors</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

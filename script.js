@@ -1,20 +1,14 @@
 'use strict';
 
-const codeToShape = {
-    0: 'Scissors',
-    1: 'Paper',
-    2: 'Rock',
-}
+const shapes = ['Scissors', 'Paper', 'Rock'];
 
 function getComputerChoice() {
     return Math.floor(Math.random() * 3);
 }
 
-function getHumanChoice() {
-    let input = prompt('Please choose a shape between: \n- Rock\n- Paper\n- Scissors');
-
+function getHumanChoice(shape) {
     let choice;
-    switch (input.toLowerCase()) {
+    switch (shape.toLowerCase()) {
         case 'scissors':
             choice = 0;
             break;
@@ -32,18 +26,69 @@ function playRound(computerChoice, humanChoice) {
     let resultMessage;
     let result;
     if (computerChoice == humanChoice) {
-        resultMessage = `Draw! ${codeToShape[humanChoice]} [h] and ${codeToShape[computerChoice]} [c].`;
+        resultMessage = `Draw! ${shapes[humanChoice]} [h] and ${shapes[computerChoice]} [c].`;
         result = 0;
+
+        computerButtons[computerChoice].style.backgroundColor = 'orange';
     } else if ((computerChoice + 1) % 3 == humanChoice) {
-        resultMessage = `Lose! ${codeToShape[computerChoice]} [c] beats ${codeToShape[humanChoice]} [h].`; 
+        resultMessage = `Lose! ${shapes[computerChoice]} [c] beats ${shapes[humanChoice]} [h].`; 
         result = 1;
+
+        computerButtons[computerChoice].style.backgroundColor = 'red';
     } else {
-        resultMessage = `Win! ${codeToShape[humanChoice]} [h] beats ${codeToShape[computerChoice]} [c].`;
+        resultMessage = `Win! ${shapes[humanChoice]} [h] beats ${shapes[computerChoice]} [c].`;
         result = 2;
+        
+        computerButtons[computerChoice].style.backgroundColor = 'green';
     }
 
-    console.log(resultMessage);
-    return result;
+    console.log(computerChoice);
+
+    return {
+        'message': resultMessage,
+        'result': result,
+    };
+}
+
+function applyResult(resultObj) {
+    switch (resultObj.result) {
+        case 0:
+            humanScore++;
+            computerScore++;
+            break;
+        case 1:
+            computerScore++;
+            break;
+        default:
+            humanScore++;
+    }
+
+    announcementH.textContent = resultObj.message;
+    if (Math.max(computerScore, humanScore) == 5) {
+        let gameEndMessage;
+        let restartGameMessage = 'Select a shape to start again!';
+        if (humanScore > computerScore) {
+            gameEndMessage = "Congratulations! You win!";
+        } else if (humanScore < computerScore) {
+            gameEndMessage = "Shame! You lost!";
+        } else {
+            gameEndMessage = "Amazing! It's a draw!";
+        }
+
+        isGameFinished = true;
+
+        announcementH.setAttribute('style', 'white-space: pre;');
+        announcementH.textContent += `\r\n${gameEndMessage}\r\n${restartGameMessage}`;
+    }
+
+    score.textContent = `${humanScore} - ${computerScore}`;
+}
+
+function restartGame() {
+    humanScore = 0;
+    computerScore = 0;
+
+    isGameFinished = false;
 }
 
 function playGame(numOfRounds = 5) {
@@ -80,4 +125,44 @@ function playGame(numOfRounds = 5) {
     console.log(`The final score is ${humanScore} [h] - ${computerScore} [c].`);
 }
 
-playGame();
+let humanScore = 0;
+let computerScore = 0;
+
+let isGameFinished = false;
+
+const announcementH = document.body.querySelector('.announcement');
+const score = document.body.querySelector('.score');
+
+const computerChoiceArea = document.body.querySelector('.computer-choice');
+const computerButtons = [computerChoiceArea.querySelector('.scissors'), computerChoiceArea.querySelector('.paper'), computerChoiceArea.querySelector('.rock')];
+computerButtons.forEach((item) => {
+    item.style.backgroundColor = 'buttonface';
+});
+function clearComputerButtonsBackgroundColor() {
+    computerButtons.forEach((item) => {
+        item.style.backgroundColor = 'buttonface';
+    });
+}
+
+const humanChoiceArea = document.body.querySelector('.human-choice');
+humanChoiceArea.addEventListener('click', (e) => {
+    console.log(e);
+    if (e.target.nodeName != 'BUTTON') {
+        return;
+    }
+
+    console.log(isGameFinished);
+    if (isGameFinished) {
+        restartGame();
+    }
+    console.log(score.textContent);
+
+    const computerChoice = getComputerChoice();
+    const humanChoice = getHumanChoice(e.target.textContent);
+
+    clearComputerButtonsBackgroundColor();
+
+    const resultObj = playRound(computerChoice, humanChoice);
+    applyResult(resultObj);
+});
+
