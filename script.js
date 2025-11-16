@@ -30,19 +30,20 @@ function playRound(computerChoice, humanChoice) {
         result = 0;
 
         computerButtons[computerChoice].style.backgroundColor = 'orange';
+        humanButtons[humanChoice].style.backgroundColor = 'orange';
     } else if ((computerChoice + 1) % 3 == humanChoice) {
         resultMessage = `Lose! ${shapes[computerChoice]} [c] beats ${shapes[humanChoice]} [h].`; 
         result = 1;
 
-        computerButtons[computerChoice].style.backgroundColor = 'red';
+        humanButtons[humanChoice].style.backgroundColor = 'red';
+        computerButtons[computerChoice].style.backgroundColor = 'green';
     } else {
         resultMessage = `Win! ${shapes[humanChoice]} [h] beats ${shapes[computerChoice]} [c].`;
         result = 2;
         
-        computerButtons[computerChoice].style.backgroundColor = 'green';
+        humanButtons[humanChoice].style.backgroundColor = 'green';
+        computerButtons[computerChoice].style.backgroundColor = 'red';
     }
-
-    console.log(computerChoice);
 
     return {
         'message': resultMessage,
@@ -68,11 +69,11 @@ function applyResult(resultObj) {
         let gameEndMessage;
         let restartGameMessage = 'Select a shape to start again!';
         if (humanScore > computerScore) {
-            gameEndMessage = "Congratulations! You win!";
+            gameEndMessage = "Congratulations! You won the game!";
         } else if (humanScore < computerScore) {
-            gameEndMessage = "Shame! You lost!";
+            gameEndMessage = "Shame! You lost the game!";
         } else {
-            gameEndMessage = "Amazing! It's a draw!";
+            gameEndMessage = "Amazing! It's a draw! (Secret ending!)";
         }
 
         isGameFinished = true;
@@ -91,40 +92,6 @@ function restartGame() {
     isGameFinished = false;
 }
 
-function playGame(numOfRounds = 5) {
-    let humanScore = 0;
-    let computerScore = 0;
-
-    for (let i = 0; i < numOfRounds; i++) {
-        console.log(`The current score is ${humanScore} [h] - ${computerScore} [c].`);
-        let computerChoice = getComputerChoice();
-        let humanChoice = getHumanChoice();
-    
-        let result = playRound(computerChoice, humanChoice);
-        switch (result) {
-            case 0:
-                humanScore++;
-                computerScore++;
-                break;
-            case 1:
-                computerScore++;
-                break;
-            default:
-                humanScore++;
-        }
-    }
-
-    if (humanScore > computerScore) {
-        console.log("Congratulations! You win!");        
-    } else if (humanScore < computerScore) {
-        console.log("Shame! You lost!");
-    } else {
-        console.log("Amazing! It's a draw!");
-    }
-
-    console.log(`The final score is ${humanScore} [h] - ${computerScore} [c].`);
-}
-
 let humanScore = 0;
 let computerScore = 0;
 
@@ -135,34 +102,30 @@ const score = document.body.querySelector('.score');
 
 const computerChoiceArea = document.body.querySelector('.computer-choice');
 const computerButtons = [computerChoiceArea.querySelector('.scissors'), computerChoiceArea.querySelector('.paper'), computerChoiceArea.querySelector('.rock')];
-computerButtons.forEach((item) => {
-    item.style.backgroundColor = 'buttonface';
-});
-function clearComputerButtonsBackgroundColor() {
-    computerButtons.forEach((item) => {
+
+const humanChoiceArea = document.body.querySelector('.human-choice');
+const humanButtons = [humanChoiceArea.querySelector('.scissors'), humanChoiceArea.querySelector('.paper'), humanChoiceArea.querySelector('.rock')];
+const clearChoiceButtonsBackgroundColor = (buttons) => {
+    buttons.forEach((item) => {
         item.style.backgroundColor = 'buttonface';
     });
 }
 
-const humanChoiceArea = document.body.querySelector('.human-choice');
 humanChoiceArea.addEventListener('click', (e) => {
-    console.log(e);
     if (e.target.nodeName != 'BUTTON') {
         return;
     }
 
-    console.log(isGameFinished);
     if (isGameFinished) {
         restartGame();
     }
-    console.log(score.textContent);
 
     const computerChoice = getComputerChoice();
     const humanChoice = getHumanChoice(e.target.textContent);
 
-    clearComputerButtonsBackgroundColor();
+    clearChoiceButtonsBackgroundColor(computerButtons);
+    clearChoiceButtonsBackgroundColor(humanButtons);
 
     const resultObj = playRound(computerChoice, humanChoice);
     applyResult(resultObj);
 });
-
