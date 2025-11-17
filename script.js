@@ -29,20 +29,20 @@ function playRound(computerChoice, humanChoice) {
         resultMessage = `Draw! ${shapes[humanChoice]} and ${shapes[computerChoice]}.`;
         result = 0;
 
-        computerButtons[computerChoice].style.backgroundColor = 'orange';
-        humanButtons[humanChoice].style.backgroundColor = 'orange';
+        computerButtons[computerChoice].style.backgroundColor = blueColor;
+        humanButtons[humanChoice].style.backgroundColor = blueColor;
     } else if ((computerChoice + 1) % 3 == humanChoice) {
         resultMessage = `Lose! ${shapes[humanChoice]} is beaten by ${shapes[computerChoice]}.`;
         result = 1;
 
-        humanButtons[humanChoice].style.backgroundColor = 'red';
-        computerButtons[computerChoice].style.backgroundColor = 'green';
+        humanButtons[humanChoice].style.backgroundColor = redColor;
+        computerButtons[computerChoice].style.backgroundColor = greenColor;
     } else {
         resultMessage = `Win! ${shapes[humanChoice]} beats ${shapes[computerChoice]}.`;
         result = 2;
         
-        humanButtons[humanChoice].style.backgroundColor = 'green';
-        computerButtons[computerChoice].style.backgroundColor = 'red';
+        humanButtons[humanChoice].style.backgroundColor = greenColor;
+        computerButtons[computerChoice].style.backgroundColor = redColor;
     }
 
     return {
@@ -95,6 +95,10 @@ function restartGame() {
     isGameFinished = false;
 }
 
+const redColor = 'rgb(178, 61, 61)';
+const blueColor = 'rgba(48, 36, 126, 1)';
+const greenColor = 'rgba(48, 119, 48, 1)';
+
 let humanScore = 0;
 let computerScore = 0;
 let isGameFinished = false;
@@ -109,7 +113,7 @@ const humanChoiceArea = document.body.querySelector('.human-choice');
 const humanButtons = [humanChoiceArea.querySelector('.scissors'), humanChoiceArea.querySelector('.paper'), humanChoiceArea.querySelector('.rock')];
 function clearChoiceButtonsBackgroundColor(buttons) {
     buttons.forEach((item) => {
-        item.style.backgroundColor = 'buttonface';
+        item.style.backgroundColor = '#1e9f9781';
     });
 }
 
