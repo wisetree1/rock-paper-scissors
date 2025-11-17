@@ -118,7 +118,6 @@ function clearChoiceButtonsBackgroundColor(buttons) {
 }
 
 humanChoiceArea.addEventListener('click', (e) => {
-    console.log(e);
     if (e.target.nodeName != 'BUTTON' && e.target.parentElement.nodeName != 'BUTTON') {
         return;
     }
