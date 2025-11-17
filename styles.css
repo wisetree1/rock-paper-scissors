@@ -10,6 +10,8 @@
     flex-direction: column;
     align-items: center;
     gap: 30px;
+
+    text-align: center;
 }
 
 .message-banner h1 {
@@ -31,9 +33,15 @@
 
 .computer-choice, .human-choice {
     display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    gap: 25px;
+}
+
+.player {
+    display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
 }
 
 .choice-area h2 {
@@ -42,6 +50,7 @@
 
 .choice-area .buttons {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 30px;
 }
@@ -52,4 +61,20 @@
     
     padding: 5px 15px;
     min-width: 5em;
+}
+
+.choice-area img {
+    width: 50px;
+    height: auto;
+}
+
+.scissors img {
+    transform: rotate(-90deg);
+}
+
+.round-logs {
+    max-width: 1000px;
+    margin: auto;
+
+    font-size: 25px;
 }
